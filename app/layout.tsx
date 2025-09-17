@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const basePath = process.env.PAGES_BASE_PATH || '';
 
 export const metadata: Metadata = {
   title: {
@@ -24,8 +25,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: basePath + '/favicon.png',
   },
   openGraph: {
     title: 'Earcam - Smart Ear Camera TV',

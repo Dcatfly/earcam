@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: process.env.PAGES_BASE_PATH || '',
+  },
 };
 
 export default nextConfig;

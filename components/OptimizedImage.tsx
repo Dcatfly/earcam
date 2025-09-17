@@ -9,6 +9,9 @@ interface OptimizedImageProps {
   loading?: 'eager' | 'lazy';
 }
 
+// Get base path from environment variable (set in next.config.ts)
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export default function OptimizedImage({
   imageKey,
   lang,
@@ -20,11 +23,11 @@ export default function OptimizedImage({
   // Generate the full filename based on imageKey and lang
   const fileName = `${imageKey}-${lang}`;
 
-  // Generate optimized image paths
-  const webpSmall = `/images/optimized/${fileName}-small.webp`;
-  const webpMedium = `/images/optimized/${fileName}-medium.webp`;
-  const webpLarge = `/images/optimized/${fileName}-large.webp`;
-  const fallbackPng = `/images/optimized/${fileName}-optimized.png`;
+  // Add base path to image URLs
+  const webpSmall = `${BASE_PATH}/images/optimized/${fileName}-small.webp`;
+  const webpMedium = `${BASE_PATH}/images/optimized/${fileName}-medium.webp`;
+  const webpLarge = `${BASE_PATH}/images/optimized/${fileName}-large.webp`;
+  const fallbackPng = `${BASE_PATH}/images/optimized/${fileName}-optimized.png`;
 
   return (
     <picture>
