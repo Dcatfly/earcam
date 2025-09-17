@@ -1,7 +1,5 @@
-export default function Home() {
-  return (
-    <main>
-      <div>Next.js on GitHub Pages</div>
-    </main>
-  );
+import HomePage from '@/components/HomePage';
+
+export default function RootPage() {
+  return <HomePage lang="en" />;
 }
