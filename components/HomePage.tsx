@@ -68,7 +68,9 @@ export default function HomePage({ lang }: HomePageProps) {
 
             <div className="animate-bounce-in" style={{animationDelay: '0.5s'}}>
               <a
-                href="#features"
+                href="https://apps.apple.com/app/id6752022264"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
               >
                 <span className="text-lg font-semibold">{t.hero.cta}</span>
