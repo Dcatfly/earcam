@@ -62,7 +62,7 @@ earcam/
 ├── lib/                      # 工具库
 │   └── i18n.ts             # 国际化配置和翻译
 ├── scripts/                  # 自定义脚本
-│   └── optimize-images.js   # 图片优化脚本（生成多格式图片）
+│   └── optimize-images.js   # 图片优化脚本（生成多尺寸 WebP 格式）
 ├── public/                   # 静态资源
 │   ├── favicon.svg          # 网站图标
 │   └── images/
@@ -73,10 +73,29 @@ earcam/
         └── deploy.yml       # GitHub Actions 部署配置
 ```
 
+### 环境变量配置
+
+| 变量名 | 用途 | 来源 |
+|--------|------|------|
+| `NEXT_PUBLIC_BASE_URL` | 网站完整 URL，用于 SEO meta 标签 | GitHub Actions / Vercel 自动注入 |
+| `VERCEL_URL` | Vercel 部署 URL | Vercel 自动注入 |
+| `PAGES_BASE_PATH` | GitHub Pages 子路径 | GitHub Actions 自动设置 |
+
+### metadataBase 工作原理
+
+在 `app/layout.tsx` 中设置一次 `metadataBase`，所有相对路径自动转换为绝对 URL：
+
+```typescript
+metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'))
+```
+
+- 子路由自动继承父级配置
+- 适用于所有 SEO meta 标签（OG、Twitter Card、canonical 等）
+
 ### 关键配置
 - **静态导出**: `next.config.ts` 中配置 `output: 'export'`
-- **基础路径**: 支持 `PAGES_BASE_PATH` 环境变量用于 GitHub Pages 部署
-- **图片优化**: 禁用图片优化以支持静态导出
+- **基础路径**: 支持 `PAGES_BASE_PATH` 环境变量用于 GitHub Pages 子目录部署
+- **图片优化**: 禁用 Next.js 内置图片优化以支持静态导出
 - **路径别名**: 使用 `@/*` 映射到项目根目录
 
 ## GitHub Pages 部署
@@ -98,7 +117,52 @@ earcam/
 ### 部署配置
 - 工作流文件：`.github/workflows/deploy.yml`
 - 输出目录：`out/`
-- 访问地址：`https://<username>.github.io/<repo-name>/`
+- 访问地址：`https://dcatfly.github.io/earcam/`
+
+## 多环境部署
+
+项目支持两个生产环境的自动化部署。
+
+### 部署环境对比
+
+| 部署环境 | URL | basePath | 触发方式 |
+|---------|-----|----------|---------|
+| **本地开发** | `http://localhost:3000` | 无 | `pnpm run dev` |
+| **GitHub Pages** | `https://dcatfly.github.io/earcam` | `/earcam` | 推送到 `main` 分支 |
+| **Vercel** | `https://earcam.dcatfly.com` | 无 | 推送到 `main` 分支或 PR |
+
+### 环境变量优先级
+
+```typescript
+NEXT_PUBLIC_BASE_URL（手动配置）→ VERCEL_URL（Vercel 自动注入）→ localhost:3000（默认值）
+```
+
+### GitHub Pages 部署
+
+- **URL**: `https://dcatfly.github.io/earcam/`
+- **配置**: `.github/workflows/deploy.yml`
+- **环境变量**: 自动拼接 `base_url + base_path`
+- **特点**: 免费托管、推送到 `main` 自动部署、支持子路径部署
+
+### Vercel 部署
+
+- **URL**: `https://earcam.dcatfly.com/`
+- **配置**: `vercel.json`
+- **环境变量**: 自动检测 `VERCEL_URL`（无需手动配置）
+- **特点**: 自动 Preview 部署、CDN 加速、零配置
+
+### Vercel 环境变量说明
+
+| 变量名 | 用途 | Preview 环境 | Production 环境 |
+|--------|------|-------------|----------------|
+| `VERCEL_URL` | 当前部署 URL（✅ 当前使用） | 独立 URL | 自定义域名 |
+| `VERCEL_PROJECT_PRODUCTION_URL` | 始终指向生产 | 生产 URL | 生产 URL |
+
+**注意**: `VERCEL_URL` 不包含 `https://` 前缀，代码中需手动拼接。
+
+### 验证部署
+
+测试工具：[Facebook Debugger](https://developers.facebook.com/tools/debug/) / [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 
 ## 页面功能特性
 

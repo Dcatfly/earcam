@@ -1,16 +1,32 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const basePath = process.env.PAGES_BASE_PATH || '';
+// 支持多环境部署：GitHub Pages、Vercel、本地开发
+// 优先级：NEXT_PUBLIC_BASE_URL > VERCEL_URL > localhost
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  || (process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000');
 
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: {
-    default: 'Earcam - Smart Ear Camera TV | 智能掏耳勺电视版',
+    default: 'Earcam - Smart TV App for Bebird Ear Camera | Bebird 可视掏耳勺电视版 | Big Screen Viewing',
     template: '%s | Earcam'
   },
-  description: 'Transform your Apple TV into a professional ear care station. Connect smart ear camera devices to view real-time HD video on the big screen. | 将您的Apple TV变成专业的耳道护理站，在大屏幕上查看高清实时视频。',
-  keywords: ['ear camera', 'ear cleaning', 'ear care', 'otoscope', 'ear health', 'ear scope', 'ear wax removal', 'health tool', 'wireless', 'Apple TV', '掏耳勺', '耳道清洁', '耳道护理', '耳镜', '智能掏耳'],
+  description: 'Transform your TV into a professional ear care station for Bebird devices. Compatible with Bebird Note3, Bebird Note5 and other smart ear camera devices. View real-time HD video on big screen. | 将您的智能电视变成专业的耳道护理站，兼容 Bebird Note3、Bebird Note5 等智能可视掏耳勺设备，在电视大屏上查看高清实时视频。',
+  keywords: [
+    // English keywords - Bebird focused
+    'Bebird', 'Bebird TV', 'Bebird TV app', 'Bebird Note3', 'Bebird Note5', 'Bebird Note3 Pro',
+    'ear camera', 'ear cleaning', 'ear care', 'otoscope', 'ear health', 'ear scope', 'ear wax removal',
+    'TV app', 'Smart TV', 'big screen', 'ear camera TV', 'smart ear camera', 'wireless ear camera',
+    'TV ear camera app', 'big screen ear cleaning', 'ear camera big screen', 'Bebird compatible',
+    // Chinese keywords - Bebird focused
+    'Bebird', 'Bebird 电视版', 'Bebird TV', 'Bebird 掏耳勺', 'Bebird Note3', 'Bebird Note5',
+    '可视掏耳勺', '智能可视掏耳勺', '掏耳勺', '智能掏耳勺', '掏耳勺电视', '可视掏耳勺 电视',
+    '智能掏耳勺 大屏', '电视掏耳勺', '无线可视掏耳勺', '大屏掏耳勺', 'Bebird 大屏',
+    '耳道清洁', '耳道护理', '耳镜', '耳道摄像头', '采耳工具', '智能电视应用'
+  ],
   authors: [{ name: 'Earcam Team' }],
   publisher: 'Earcam',
   robots: {
@@ -25,16 +41,37 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: basePath + '/favicon.png',
+    icon: '/favicon.png',
+  },
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en': '/',
+      'zh': '/zh',
+    },
   },
   openGraph: {
-    title: 'Earcam - Smart Ear Camera TV',
-    description: 'Professional ear care on your Apple TV',
-    url: baseUrl,
+    title: 'Earcam TV App - Bebird Compatible Smart Ear Camera for Big Screen',
+    description: 'Transform your TV into a professional ear care station. Works with Bebird Note3, Note5 and other smart ear camera devices. View real-time HD video on big screen.',
+    url: '/',
     siteName: 'Earcam',
     locale: 'en_US',
     alternateLocale: ['zh_CN'],
     type: 'website',
+    images: [
+      {
+        url: '/images/optimized/home-disconnected-en-optimized.png',
+        width: 1024,
+        height: 576,
+        alt: 'Earcam TV App - Bebird Compatible Smart Ear Camera for Big Screen',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Earcam TV App - Bebird Compatible',
+    description: 'Transform your TV into a professional ear care station. Compatible with Bebird and other smart ear cameras.',
+    images: ['/images/optimized/home-disconnected-en-optimized.png'],
   },
 };
 
@@ -51,11 +88,78 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  // Structured Data (JSON-LD) for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': baseUrl + '/#webpage',
+        url: baseUrl,
+        name: 'Earcam - Smart TV App for Bebird Ear Camera',
+        description: 'Transform your TV into a professional ear care station. Compatible with Bebird and other smart ear camera devices.',
+        inLanguage: 'en-US',
+        isPartOf: { '@id': baseUrl + '/#website' },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': baseUrl + '/#website',
+        url: baseUrl,
+        name: 'Earcam',
+        description: 'Professional ear care TV app for Bebird devices',
+        publisher: { '@id': baseUrl + '/#organization' },
+        inLanguage: 'en-US',
+      },
+      {
+        '@type': 'Organization',
+        '@id': baseUrl + '/#organization',
+        name: 'Earcam',
+        url: baseUrl,
+        logo: {
+          '@type': 'ImageObject',
+          url: baseUrl + '/favicon.png',
+        },
+        contactPoint: {
+          '@type': 'ContactPoint',
+          email: 'support@dcatfly.com',
+          contactType: 'Customer Support',
+        },
+      },
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Earcam',
+        applicationCategory: 'Utility',
+        operatingSystem: 'tvOS',
+        offers: {
+          '@type': 'Offer',
+          price: '3.99',
+          priceCurrency: 'USD',
+        },
+        description: 'Bebird compatible ear camera TV app. View real-time video on big screen. Works with Bebird Note3, Note5 and other smart ear cameras.',
+        screenshot: baseUrl + '/images/optimized/home-disconnected-en-optimized.png',
+        featureList: [
+          'Big screen viewing on TV',
+          'Automatic device connection',
+          'Real-time HD video streaming',
+          'TV remote control support',
+          'Video rotation control',
+          'Battery level monitoring',
+          'Fullscreen mode',
+          'Multi-language support',
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </head>
       <body className="antialiased min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         {children}

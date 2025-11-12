@@ -21,9 +21,9 @@ export const translations = {
   en: {
     hero: {
       title: 'Earcam',
-      subtitle: 'Smart Ear Camera TV',
-      description: 'Transform your Apple TV into a professional ear care station',
-      tagline: 'View ear health on your TV with HD clarity',
+      subtitle: 'Bebird Ear Camera TV App',
+      description: 'Transform your TV into a professional ear care station - Works with Bebird and other smart ear camera devices',
+      tagline: 'View ear health on your TV big screen with HD clarity - The perfect companion for your Bebird ear camera',
       cta: 'Learn More',
       badge: 'Professional Ear Care'
     },
@@ -109,11 +109,11 @@ export const translations = {
     },
     compatibility: {
       title: 'Compatible Devices',
-      subtitle: 'Works with popular ear camera brands',
-      description: 'Supports a wide range of smart ear camera devices',
-      devices: ['Bebird Note3', 'Bebird Note5', 'And other compatible models'],
-      note: 'If you want to add support for your device, please contact us.',
-      purchaseNote: 'Note: Ear camera devices are sold separately'
+      subtitle: 'Works with Bebird and other popular ear camera brands',
+      description: 'Supports Bebird smart ear camera devices and other compatible wireless ear cleaning cameras',
+      devices: ['Bebird Note3', 'Bebird Note5', 'Bebird Note3 Pro', 'And other compatible models'],
+      note: 'If you want to add support for your Bebird or other ear camera device, please contact us.',
+      purchaseNote: 'Note: Bebird ear camera devices are sold separately'
     },
     safety: {
       title: 'Safety First',
@@ -146,20 +146,20 @@ export const translations = {
   zh: {
     hero: {
       title: 'Earcam',
-      subtitle: '智能掏耳勺电视版',
-      description: '将您的Apple TV变成专业的耳道护理站',
-      tagline: '在电视上查看耳道健康状况，画面清晰',
+      subtitle: 'Bebird 可视掏耳勺电视版',
+      description: '将您的智能电视变成专业的耳道护理站 - Bebird 等智能可视掏耳勺专用应用',
+      tagline: '在电视大屏上查看耳道健康状况，画面清晰 - Bebird 可视掏耳勺的完美伴侣',
       cta: '了解更多',
       badge: '专业耳道护理'
     },
     features: {
       title: '核心功能',
-      subtitle: '安全耳道护理所需的一切',
+      subtitle: 'Bebird 可视掏耳勺电视版 - 安全耳道护理所需的一切',
       items: [
         {
           icon: Monitor,
           title: '大屏显示',
-          description: '将电视变成专业的耳道检查显示器'
+          description: '将智能电视变成专业的可视掏耳勺显示器'
         },
         {
           icon: Wifi,
@@ -174,7 +174,7 @@ export const translations = {
         {
           icon: Gamepad2,
           title: '遥控器控制',
-          description: '使用Apple TV遥控器轻松导航'
+          description: '使用电视遥控器轻松导航操作'
         },
         {
           icon: RotateCw,
@@ -213,12 +213,12 @@ export const translations = {
         {
           number: '01',
           title: '连接设备',
-          description: '将Apple TV连接到设备发出的WiFi中'
+          description: '将智能电视连接到设备发出的WiFi中'
         },
         {
           number: '02',
           title: '启动应用',
-          description: '在Apple TV上打开Earcam'
+          description: '在电视上打开 Earcam 应用'
         },
         {
           number: '03',
@@ -234,27 +234,27 @@ export const translations = {
     },
     compatibility: {
       title: '兼容设备',
-      subtitle: '支持主流掏耳勺品牌',
-      description: '支持多种智能掏耳勺设备',
-      devices: ['Bebird Note3', 'Bebird Note5', '其他兼容型号'],
-      note: '如果您想添加对您设备的支持，请联系我们。',
-      purchaseNote: '注意：掏耳勺设备需单独购买'
+      subtitle: '支持 Bebird 等主流可视掏耳勺品牌',
+      description: '支持 Bebird 智能可视掏耳勺设备及其他兼容的无线可视掏耳勺',
+      devices: ['Bebird Note3 可视掏耳勺', 'Bebird Note5 可视掏耳勺', 'Bebird Note3 Pro', '其他兼容型号'],
+      note: '如果您想添加对您的 Bebird 或其他可视掏耳勺设备的支持，请联系我们。',
+      purchaseNote: '注意：Bebird 可视掏耳勺设备需单独购买'
     },
     safety: {
       title: '安全第一',
-      subtitle: '家用专业工具',
+      subtitle: 'Bebird 可视掏耳勺电视版 - 家用专业工具',
       items: [
         {
           icon: Shield,
-          text: '大屏显示让耳道清洁更安全'
+          text: '电视大屏显示让可视掏耳勺使用更安全'
         },
         {
           icon: Eye,
-          text: '高清视频流提供更好的可视性'
+          text: '高清视频流提供更好的耳道可视性'
         },
         {
           icon: Smartphone,
-          text: '专业工具，家用便捷'
+          text: '专业可视掏耳勺工具，家用便捷'
         }
       ]
     },
