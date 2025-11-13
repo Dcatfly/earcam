@@ -7,7 +7,7 @@
 - **多语言支持**：内置中英文双语，基于路径的路由实现
 - **响应式设计**：完美适配桌面、平板和移动设备
 - **性能优化**：图片自动优化、WebP 格式支持、懒加载
-- **自动部署**：通过 GitHub Actions 自动构建并部署到 GitHub Pages
+- **自动部署**：通过 Vercel 自动构建并部署到自定义域名
 
 ## 常用开发命令
 
@@ -67,82 +67,48 @@ earcam/
 │   ├── favicon.svg          # 网站图标
 │   └── images/
 │       └── optimized/       # 优化后的图片（WebP、多尺寸）
-├── out/                      # 构建输出目录（静态导出）
-└── .github/
-    └── workflows/
-        └── deploy.yml       # GitHub Actions 部署配置
+└── out/                      # 构建输出目录（静态导出）
 ```
 
 ### 环境变量配置
 
 | 变量名 | 用途 | 来源 |
 |--------|------|------|
-| `NEXT_PUBLIC_BASE_URL` | 网站完整 URL，用于 SEO meta 标签 | GitHub Actions / Vercel 自动注入 |
-| `VERCEL_URL` | Vercel 部署 URL | Vercel 自动注入 |
-| `PAGES_BASE_PATH` | GitHub Pages 子路径 | GitHub Actions 自动设置 |
+| `NEXT_PUBLIC_SITE_URL` | （可选）显式指定站点绝对 URL | 手动设置 |
+| `VERCEL_URL` | Vercel 临时部署 URL | Vercel 自动注入 |
+| `VERCEL_PROJECT_PRODUCTION_URL` | Vercel 生产域（无协议） | Vercel 自动注入 |
 
 ### metadataBase 工作原理
 
-在 `app/layout.tsx` 中设置一次 `metadataBase`，所有相对路径自动转换为绝对 URL：
+在 `app/layout.tsx` 中统一引用 `siteConfig`，所有相对路径会自动转换为基于主域名的绝对 URL：
 
 ```typescript
-metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'))
+import { siteConfig } from '@/lib/siteConfig'
+
+metadataBase: new URL(siteConfig.baseUrl)
 ```
 
 - 子路由自动继承父级配置
 - 适用于所有 SEO meta 标签（OG、Twitter Card、canonical 等）
+- `siteConfig` 会优先使用 `NEXT_PUBLIC_SITE_URL`，否则自动回退到 Vercel 提供的生产域，确保始终输出 `https://earcam.dcatfly.com`
 
 ### 关键配置
 - **静态导出**: `next.config.ts` 中配置 `output: 'export'`
-- **基础路径**: 支持 `PAGES_BASE_PATH` 环境变量用于 GitHub Pages 子目录部署
+- **主域名**: 通过 `NEXT_PUBLIC_SITE_URL`（或 Vercel 生产域）固定为 `https://earcam.dcatfly.com`
 - **图片优化**: 禁用 Next.js 内置图片优化以支持静态导出
 - **路径别名**: 使用 `@/*` 映射到项目根目录
 
-## GitHub Pages 部署
-
-### 自动部署流程
-项目配置了完整的 CI/CD 流程，每次推送到 `main` 分支都会自动部署：
-
-1. **触发条件**：推送到 `main` 分支或手动触发
-2. **构建环境**：
-   - Ubuntu 最新版
-   - Node.js 22
-   - pnpm 10
-3. **构建步骤**：
-   - 安装依赖（使用 pnpm）
-   - 构建静态网站（自动设置 base path）
-   - 上传构建产物到 GitHub Pages
-4. **缓存策略**：缓存 `.next/cache` 目录，加速后续构建
-
-### 部署配置
-- 工作流文件：`.github/workflows/deploy.yml`
-- 输出目录：`out/`
-- 访问地址：`https://dcatfly.github.io/earcam/`
-
 ## 多环境部署
 
-项目支持两个生产环境的自动化部署。
+当前仅保留 Vercel 作为生产环境，GitHub Pages 已关闭。
 
-### 部署环境对比
 
-| 部署环境 | URL | basePath | 触发方式 |
-|---------|-----|----------|---------|
-| **本地开发** | `http://localhost:3000` | 无 | `pnpm run dev` |
-| **GitHub Pages** | `https://dcatfly.github.io/earcam` | `/earcam` | 推送到 `main` 分支 |
-| **Vercel** | `https://earcam.dcatfly.com` | 无 | 推送到 `main` 分支或 PR |
 
 ### 环境变量优先级
 
 ```typescript
-NEXT_PUBLIC_BASE_URL（手动配置）→ VERCEL_URL（Vercel 自动注入）→ localhost:3000（默认值）
+NEXT_PUBLIC_SITE_URL → VERCEL_PROJECT_PRODUCTION_URL → VERCEL_URL → http://localhost:3000
 ```
-
-### GitHub Pages 部署
-
-- **URL**: `https://dcatfly.github.io/earcam/`
-- **配置**: `.github/workflows/deploy.yml`
-- **环境变量**: 自动拼接 `base_url + base_path`
-- **特点**: 免费托管、推送到 `main` 自动部署、支持子路径部署
 
 ### Vercel 部署
 

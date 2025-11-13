@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { siteConfig } from '@/lib/siteConfig';
 
 export const metadata: Metadata = {
   title: 'Earcam - Bebird 可视掏耳勺电视版 | 大屏专用应用 | Note3/Note5',
@@ -67,18 +68,17 @@ export default function ZhLayout({
   children: React.ReactNode;
 }) {
   // Structured Data (JSON-LD) for SEO - Chinese version
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebPage',
-        '@id': baseUrl + '/zh#webpage',
-        url: baseUrl + '/zh',
+        '@id': siteConfig.absolutePath('/zh#webpage'),
+        url: siteConfig.absolutePath('/zh'),
         name: 'Earcam - Bebird 可视掏耳勺电视版',
         description: '将您的智能电视变成专业的耳道护理站，兼容 Bebird 等智能可视掏耳勺设备。',
         inLanguage: 'zh-CN',
-        isPartOf: { '@id': baseUrl + '/#website' },
+        isPartOf: { '@id': siteConfig.absolutePath('/#website') },
       },
       {
         '@type': 'SoftwareApplication',
@@ -91,7 +91,7 @@ export default function ZhLayout({
           priceCurrency: 'USD',
         },
         description: 'Bebird 可视掏耳勺电视版应用。在大屏上查看实时视频。兼容 Bebird Note3、Note5 等智能可视掏耳勺。',
-        screenshot: baseUrl + '/images/optimized/home-disconnected-zh-optimized.png',
+        screenshot: siteConfig.absolutePath('/images/optimized/home-disconnected-zh-optimized.png'),
         featureList: [
           '电视大屏显示',
           '自动设备连接',

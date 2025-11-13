@@ -1,15 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-
-// 支持多环境部署：GitHub Pages、Vercel、本地开发
-// 优先级：NEXT_PUBLIC_BASE_URL > VERCEL_URL > localhost
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-  || (process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : 'http://localhost:3000');
+import { siteConfig } from '@/lib/siteConfig';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(baseUrl),
+  metadataBase: new URL(siteConfig.baseUrl),
   title: {
     default: 'Earcam - Smart TV App for Bebird Ear Camera | Bebird 可视掏耳勺电视版 | Big Screen Viewing',
     template: '%s | Earcam'
@@ -94,30 +88,30 @@ export default function RootLayout({
     '@graph': [
       {
         '@type': 'WebPage',
-        '@id': baseUrl + '/#webpage',
-        url: baseUrl,
+        '@id': siteConfig.absolutePath('/#webpage'),
+        url: siteConfig.baseUrl,
         name: 'Earcam - Smart TV App for Bebird Ear Camera',
         description: 'Transform your TV into a professional ear care station. Compatible with Bebird and other smart ear camera devices.',
         inLanguage: 'en-US',
-        isPartOf: { '@id': baseUrl + '/#website' },
+        isPartOf: { '@id': siteConfig.absolutePath('/#website') },
       },
       {
         '@type': 'WebSite',
-        '@id': baseUrl + '/#website',
-        url: baseUrl,
+        '@id': siteConfig.absolutePath('/#website'),
+        url: siteConfig.baseUrl,
         name: 'Earcam',
         description: 'Professional ear care TV app for Bebird devices',
-        publisher: { '@id': baseUrl + '/#organization' },
+        publisher: { '@id': siteConfig.absolutePath('/#organization') },
         inLanguage: 'en-US',
       },
       {
         '@type': 'Organization',
-        '@id': baseUrl + '/#organization',
+        '@id': siteConfig.absolutePath('/#organization'),
         name: 'Earcam',
-        url: baseUrl,
+        url: siteConfig.baseUrl,
         logo: {
           '@type': 'ImageObject',
-          url: baseUrl + '/favicon.png',
+          url: siteConfig.absolutePath('/favicon.png'),
         },
         contactPoint: {
           '@type': 'ContactPoint',
@@ -136,7 +130,7 @@ export default function RootLayout({
           priceCurrency: 'USD',
         },
         description: 'Bebird compatible ear camera TV app. View real-time video on big screen. Works with Bebird Note3, Note5 and other smart ear cameras.',
-        screenshot: baseUrl + '/images/optimized/home-disconnected-en-optimized.png',
+        screenshot: siteConfig.absolutePath('/images/optimized/home-disconnected-en-optimized.png'),
         featureList: [
           'Big screen viewing on TV',
           'Automatic device connection',

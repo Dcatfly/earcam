@@ -1,37 +1,32 @@
 import { MetadataRoute } from 'next'
+import { siteConfig } from '@/lib/siteConfig'
 
 // 标记为静态路由，支持 output: 'export' 模式
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // 复用与 layout.tsx 相同的 URL 生成逻辑
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
-
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
-
   return [
     {
-      url: `${baseUrl}${basePath}/`,
+      url: siteConfig.absolutePath('/'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1.0,
       alternates: {
         languages: {
-          en: `${baseUrl}${basePath}/`,
-          zh: `${baseUrl}${basePath}/zh/`,
+          en: siteConfig.absolutePath('/'),
+          zh: siteConfig.absolutePath('/zh/'),
         },
       },
     },
     {
-      url: `${baseUrl}${basePath}/zh/`,
+      url: siteConfig.absolutePath('/zh/'),
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1.0,
       alternates: {
         languages: {
-          en: `${baseUrl}${basePath}/`,
-          zh: `${baseUrl}${basePath}/zh/`,
+          en: siteConfig.absolutePath('/'),
+          zh: siteConfig.absolutePath('/zh/'),
         },
       },
     },
