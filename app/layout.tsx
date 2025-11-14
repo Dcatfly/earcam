@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { siteConfig } from '@/lib/siteConfig';
 
@@ -158,6 +159,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         {children}
+        <SpeedInsights />
         {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && process.env.NEXT_PUBLIC_UMAMI_URL && (
           <Script
             src={process.env.NEXT_PUBLIC_UMAMI_URL}
