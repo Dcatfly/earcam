@@ -1,3 +1,22 @@
+<!-- OPENSPEC:START -->
+# OpenSpec Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/openspec/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/openspec/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+
+Keep this managed block so 'openspec update' can refresh the instructions.
+
+<!-- OPENSPEC:END -->
+
 ## 项目概述
 
 **Earcam** 是一个专业的智能掏耳勺产品介绍网站，为配套的 Apple TV 应用（../bebird_-reverse）提供产品展示和下载引导。
@@ -46,6 +65,15 @@ pnpm remove <package> # 移除依赖
 - **sharp**: 高性能图片处理库，用于生成优化图片
 - **autoprefixer**: 自动添加 CSS 浏览器前缀
 
+### 外部服务
+- **Umami Cloud**: 开源、隐私友好的网站分析服务
+  - 用途：跟踪用户交互行为（按钮点击、页面访问等）
+  - 特点：无需 Cookie，符合 GDPR/PECR，不收集个人身份信息
+  - 集成位置：`app/layout.tsx`（通过 Next.js Script 组件）
+  - 跟踪事件：
+    - `app_store_click`：用户点击"了解更多"按钮跳转到 App Store（含语言和描述信息）
+    - `email_click`：用户点击邮箱联系按钮（含语言信息）
+
 ### 项目结构
 ```
 earcam/
@@ -77,6 +105,8 @@ earcam/
 | `NEXT_PUBLIC_SITE_URL` | （可选）显式指定站点绝对 URL | 手动设置 |
 | `VERCEL_URL` | Vercel 临时部署 URL | Vercel 自动注入 |
 | `VERCEL_PROJECT_PRODUCTION_URL` | Vercel 生产域（无协议） | Vercel 自动注入 |
+| `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Umami 网站分析 ID | 手动设置 |
+| `NEXT_PUBLIC_UMAMI_URL` | Umami 跟踪脚本 URL | 手动设置 |
 
 ### metadataBase 工作原理
 

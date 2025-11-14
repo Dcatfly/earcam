@@ -1,3 +1,5 @@
+'use client';
+
 import {
   CheckCircle,
   Mail,
@@ -72,6 +74,9 @@ export default function HomePage({ lang }: HomePageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                onClick={() => {
+                  window.umami?.track('app_store_click', { language: lang, description: 'apple' });
+                }}
               >
                 <span className="text-lg font-semibold">{t.hero.cta}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -329,6 +334,9 @@ export default function HomePage({ lang }: HomePageProps) {
               href={`mailto:${t.contact.email}`}
               className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-primary-600 rounded-2xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 animate-bounce-in"
               style={{animationDelay: '0.3s'}}
+              onClick={() => {
+                window.umami?.track('email_click', { language: lang });
+              }}
             >
               <Mail className="w-6 h-6" />
               <span className="text-lg font-semibold">{t.contact.email}</span>
