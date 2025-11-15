@@ -10,6 +10,7 @@ import {
 import { getTranslation, Language } from '@/lib/i18n';
 import Link from 'next/link';
 import OptimizedImage from '@/components/OptimizedImage';
+import { AppleLogo, AndroidLogo } from '@/components/BrandIcons';
 
 interface HomePageProps {
   lang: Language;
@@ -20,6 +21,8 @@ export default function HomePage({ lang }: HomePageProps) {
   const isZh = lang === 'zh';
   const switchToPath = isZh ? '/' : '/zh';
   const switchToLabel = isZh ? 'English' : '中文';
+  const ctaButtonBaseClasses =
+    'group inline-flex items-center gap-3 px-8 py-4 h-16 rounded-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer shadow-xl hover:shadow-2xl';
 
   return (
     <main className="min-h-screen bg-white">
@@ -68,19 +71,33 @@ export default function HomePage({ lang }: HomePageProps) {
               {t.hero.tagline}
             </p>
 
-            <div className="animate-bounce-in" style={{animationDelay: '0.5s'}}>
+            <div className="flex flex-col md:flex-row gap-4 justify-center items-center animate-bounce-in" style={{animationDelay: '0.5s'}}>
+              {/* Apple App Store Button */}
               <a
                 href="https://apps.apple.com/app/id6752022264"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-2xl hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                className={`${ctaButtonBaseClasses} bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700`}
                 onClick={() => {
                   window.umami?.track('app_store_click', { language: lang, description: 'apple' });
                 }}
               >
-                <span className="text-lg font-semibold">{t.hero.cta}</span>
+                <AppleLogo className="w-6 h-6" />
+                <span className="text-lg font-semibold">{t.hero.ctaApple}</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
+
+              {/* Android Button (Coming Soon) */}
+              <button
+                type="button"
+                className={`${ctaButtonBaseClasses} bg-white border-2 border-primary-500 text-primary-600 hover:bg-primary-50`}
+                onClick={() => {
+                  window.umami?.track('app_store_click', { language: lang, description: 'android' });
+                }}
+              >
+                <AndroidLogo className="w-6 h-6" />
+                <span className="text-lg font-semibold">{t.hero.ctaAndroid}</span>
+              </button>
             </div>
           </div>
         </div>

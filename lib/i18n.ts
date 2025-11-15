@@ -25,6 +25,8 @@ export const translations = {
       description: 'Transform your TV into a professional ear care station - Works with Bebird and other smart ear camera devices',
       tagline: 'View ear health on your TV big screen with HD clarity - The perfect companion for your Bebird ear camera',
       cta: 'Learn More',
+      ctaApple: 'App Store',
+      ctaAndroid: 'Google Play (Coming Soon)',
       badge: 'Professional Ear Care'
     },
     features: {
@@ -150,6 +152,8 @@ export const translations = {
       description: '将您的智能电视变成专业的耳道护理站 - Bebird 等智能可视掏耳勺专用应用',
       tagline: '在电视大屏上查看耳道健康状况，画面清晰 - Bebird 可视掏耳勺的完美伴侣',
       cta: '了解更多',
+      ctaApple: 'App Store',
+      ctaAndroid: 'Google Play (即将可用)',
       badge: '专业耳道护理'
     },
     features: {
