@@ -64,8 +64,22 @@ pnpm remove <package> # 移除依赖
 - **lucide-react**: 提供精美的 React 图标组件
 - **sharp**: 高性能图片处理库，用于生成优化图片
 - **autoprefixer**: 自动添加 CSS 浏览器前缀
+- **@vercel/speed-insights**: Vercel 官方性能监控工具，收集 Web Vitals 数据
 
 ### 外部服务
+- **Vercel Speed Insights**: 网站性能监控服务
+  - 用途：自动收集真实用户的性能指标（Web Vitals）
+  - 监控指标：
+    - **LCP (Largest Contentful Paint)**：最大内容绘制时间
+    - **FID (First Input Delay)**：首次输入延迟
+    - **CLS (Cumulative Layout Shift)**：累积布局偏移
+    - **FCP (First Contentful Paint)**：首次内容绘制
+    - **TTFB (Time to First Byte)**：首字节时间
+    - **INP (Interaction to Next Paint)**：交互到下次绘制
+  - 特点：无需配置，部署到 Vercel 后自动工作
+  - 集成位置：`app/layout.tsx`（通过 `<SpeedInsights />` 组件）
+  - 数据查看：Vercel Dashboard > Analytics > Speed Insights
+
 - **Umami Cloud**: 开源、隐私友好的网站分析服务
   - 用途：跟踪用户交互行为（按钮点击、页面访问等）
   - 特点：无需 Cookie，符合 GDPR/PECR，不收集个人身份信息
